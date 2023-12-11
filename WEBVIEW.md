@@ -1,11 +1,28 @@
 # Communication
 
-Documentation to communicate between Android App and Web Javascript.
+## Start web app
+
+The app will open a web view loading the URL
+
+    [URL]?access_token=[ACCESS_TOKEN]&tracking=[TRACKING]&recipient_phone=[RECIPIENT_PHONE]&recipient_hash=[RECIPIENT_HASH]&dimensions=[DIMENSIONS]
+
+Mandatory params:
+- `access_token`
+- `tracking`
+- `recipient_phone` or `recipient_hash`
+
+Optional:
+- `dimensions`
+
+
+## Getting results from web app
+
+How to communicate between Android App and Web Javascript.
 Two communication mechanisms have been implemented:
 - Javascript Object
 - URL navigation
 
-## Javascript Object
+### Javascript Object
 
 There is an object exposed to Javascript called `CitiboxCourierSDK` with four methods:
 
@@ -19,14 +36,15 @@ closed and the status sent to the SDK consumer.
 
 Example for success:
 
+```js
     function success(boxNumber, citiboxId, deliveryId){
         if (CitiboxCourierSDK) {
             CitiboxCourierSDK.onSuccess(boxNumber, citiboxId, deliveryId)
         }
     }
+```
 
-
-## URL navigation
+### URL navigation
 
 In addition to the Javascript Object implementation, there is another way to tell the status to the
 Android SDK using navigation:
