@@ -1,6 +1,6 @@
 # Changelog
 
 ## [Unreleased]
-### Fixed
-
 ### Changed
+- Added web view contract
+- Added deeplink contract

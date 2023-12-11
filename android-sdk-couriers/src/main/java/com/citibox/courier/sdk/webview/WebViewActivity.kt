@@ -27,7 +27,14 @@ class WebViewActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CourierWebView(courierUrl)
+                    CourierWebView(
+                        url = courierUrl,
+                        onSuccess = { boxNumber, citiboxId, deliveryId ->
+                            // TODO bounce it back
+                        },
+                        onUnSuccessCallback = {
+                            // TODO bounce it back
+                        })
                 }
             }
         }
