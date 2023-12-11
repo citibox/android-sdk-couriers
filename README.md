@@ -14,16 +14,30 @@ Library and example of how to integrate with Cibitox services for deliveries
 
 In your `Activity` of `Fragment` declare a variable of type `DeliveryLauncher`:
 
-> private val citiboxLauncher = DeliveryLauncher(this, ::deliveryResultFunction)
+```kotlin
+val citiboxLauncher = DeliveryLauncher(this, ::deliveryResultFunction)
+```
 
 Create a function to handle results as a callback:
 
-> private fun deliveryResultFunction(result: DeliveryResult) {  
-> // TODO Handle the result  
-> }
+```kotlin
+private fun deliveryResultFunction(result: DeliveryResult) {  
+    // TODO Handle the result  
+}
+```
 
 And now, when your code needs to launch Citibox delivery process, pack the data into `DeliveryParams` and just call `citiboxLauncher.launch`
 
+```kotlin
+val data = DeliveryParams(
+    accessToken = "XXX",
+    tracking = "AAA-BBB-CCC",
+    recipientPhone = "+34600600600",
+    isPhoneHashed = false,
+    dimensions = "10x20x30",
+)
+citriboxLauncher.launch(data)
+```
 
 ### Entry params
 
@@ -35,7 +49,7 @@ The data class `DeliveryParams` is the input for launching the delivery process
 | `tracking`       | String  | Tracking code                                                                       |  
 | `isPhoneHashed`  | Boolean | Tells that the phone number will be hashed instead of using the actual phone number |  
 | `recipientPhone` | String  | The recipients phone                                                                |  
-| `dimensions`     | String? | Optional param to tell how big the parcel is                                        |  
+| `dimensions`     | String? | Optional param to tell how big the parcel is, must follow the format [mm]x[mm]x[mm] |  
 
 
 ### Results
@@ -53,15 +67,15 @@ When the delivery went well, the result will give you an instance of `DeliveryRe
 When the delivery couldn't be executed for some reason related to the Box or the user, you'll receive an instance of `DeliveryResult.Failure` with the field `type` telling you what went wrong.
 
 #### Failure codes
-|Type|Description|
-|--|--|
-|`parcel_not_available`|  |
-|`max_reopens_exceed`|  |
-|`empty_box`|  |
-|`box_not_available`|  |
-|`user_blocked`|  |
-|`user_autocreation_forbidden`|  |
-|`any_box_empty`|  |
+| Type                          | Description |
+|-------------------------------|-------------|
+| `parcel_not_available`        |             |
+| `max_reopens_exceed`          |             |
+| `empty_box`                   |             |
+| `box_not_available`           |             |
+| `user_blocked`                |             |
+| `user_autocreation_forbidden` |             |
+| `any_box_empty`               |             |
 
 #### Cancel
 When the delivery couldn't be done because the Courier canceled the delivery for external reasons or reasons related to the box, you'll receive an instance of `DeliveryResult.Cancel` with the field `type` with the code.

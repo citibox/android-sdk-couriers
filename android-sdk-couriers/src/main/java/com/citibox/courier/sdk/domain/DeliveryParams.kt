@@ -1,9 +1,9 @@
 package com.citibox.courier.sdk.domain
 
 data class DeliveryParams(
-    var accessToken: String,
-    var tracking: String,
-    var recipientPhone: String,
-    var isPhoneHashed: Boolean = true,
-    var dimensions: String? = null,
+    val accessToken: String,
+    val tracking: String,
+    val recipientPhone: String,
+    val isPhoneHashed: Boolean = true,
+    val dimensions: String? = null,
 )
