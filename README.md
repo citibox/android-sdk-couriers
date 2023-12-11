@@ -1,5 +1,96 @@
-# Courier SDK for deeplink integration
 
-Deeplink functionality to be used by third parties
+# Courier SDK for integration
 
-### Content
+This library allows third parties to use Citibox Services for Couriers.  
+Works with Courier app installed or via web view
+
+## Content
+
+Library and example of how to integrate with Cibitox services for deliveries
+
+## Documentation
+
+### How to use
+
+In your `Activity` of `Fragment` declare a variable of type `DeliveryLauncher`:
+
+> private val citiboxLauncher = DeliveryLauncher(this, ::deliveryResultFunction)
+
+Create a function to handle results as a callback:
+
+> private fun deliveryResultFunction(result: DeliveryResult) {  
+> // TODO Handle the result  
+> }
+
+And now, when your code needs to launch Citibox delivery process, pack the data into `DeliveryParams` and just call `citiboxLauncher.launch`
+
+
+### Entry params
+
+The data class `DeliveryParams` is the input for launching the delivery process
+
+| Param            | Type    | Description                                                                         |  
+|------------------|---------|-------------------------------------------------------------------------------------|  
+| `accessToken`    | String  | Token that identifies you as a courier                                              |  
+| `tracking`       | String  | Tracking code                                                                       |  
+| `isPhoneHashed`  | Boolean | Tells that the phone number will be hashed instead of using the actual phone number |  
+| `recipientPhone` | String  | The recipients phone                                                                |  
+| `dimensions`     | String? | Optional param to tell how big the parcel is                                        |  
+
+
+### Results
+It's represented by the object `DeliveryResult` as a `sealed class` that morph into the different states.
+Those states are success, failure, cancel or error, and each state has it's own descriptors
+
+#### Success
+When the delivery went well, the result will give you an instance of `DeliveryResult.Success` with information about the delivery like:
+
+- `boxNumber`: it's the box number where the parcel were delivered
+- `citiboxId`: our ID to allow you to link your delivery with our ID
+- `deliveryId`: the ID of the delivery
+
+#### Failure
+When the delivery couldn't be executed for some reason related to the Box or the user, you'll receive an instance of `DeliveryResult.Failure` with the field `type` telling you what went wrong.
+
+#### Failure codes
+|Type|Description|
+|--|--|
+|`parcel_not_available`|  |
+|`max_reopens_exceed`|  |
+|`empty_box`|  |
+|`box_not_available`|  |
+|`user_blocked`|  |
+|`user_autocreation_forbidden`|  |
+|`any_box_empty`|  |
+
+#### Cancel
+When the delivery couldn't be done because the Courier canceled the delivery for external reasons or reasons related to the box, you'll receive an instance of `DeliveryResult.Cancel` with the field `type` with the code.
+
+#### Cancel codes
+| Type                 | Description |
+|----------------------|-------------|
+| `not_started`        |             |
+| `cant_open_boxes`    |             |
+| `parcel_mistaken`    |             |
+| `package_in_box`     |             |
+| `need_hand_delivery` |             |
+| `other`              |             |
+
+#### Error
+When there is an error in the data preventing the delivery, you'll receive an instance of `DeliveryResult.Error` with the field `errorCode` with the code that helps you to identify what is wrong in the data.
+
+#### Error codes
+| Error code                        | Description                                                                                                            |
+|-----------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| `tracking_missing`                | The tracking code must be provided                                                                                     |
+| `access_token_missing`            | The access token must be provided                                                                                      |
+| `citibox_id_missing`              |                                                                                                                        |
+| `access_token_invalid`            | The access token is not valid, please contact Citibox Team                                                             |
+| `access_token_permissions_denied` | The access token belongs to an user with the wrong permissions, please contact Citibox Team                            |
+| `recipient_phone_missing`         | The recipient phone must be provided                                                                                   |
+| `duplicated_trackings`            | You've tried to make a delivery with a tracking code already used                                                      |
+| `recipient_phone_invalid`         | The recipient phone has a problem                                                                                      |
+| `wrong_location`                  | The location has a problem, please contact Citibox Team                                                                |
+| `arguments_missing`               | Some of the arguments are missing, check them                                                                          |
+| `data_not_received`               |                                                                                                                        |
+| `launching_problem`               | There were a problem launching the Courier app and the WebView, check the phone Google Play Services and WebViewClient |
