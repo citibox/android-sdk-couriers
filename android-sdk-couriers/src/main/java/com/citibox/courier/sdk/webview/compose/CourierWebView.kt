@@ -2,18 +2,21 @@ package com.citibox.courier.sdk.webview.compose
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
-import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.viewinterop.AndroidView
+import com.citibox.courier.sdk.webview.models.OnSuccessCallback
+import com.citibox.courier.sdk.webview.models.OnUnSuccessCallback
 
 @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
 @Composable
 internal fun CourierWebView(
     url: String,
-    onSuccess: OnSuccessCallback,
-    onUnSuccessCallback: OnUnSuccessCallback
+    onSuccessCallback: OnSuccessCallback,
+    onFailCallback: OnUnSuccessCallback,
+    onErrorCallback: OnUnSuccessCallback,
+    onCancelCallback: OnUnSuccessCallback,
 ) {
     AndroidView(factory = { context ->
         WebView(context).apply {
@@ -22,6 +25,15 @@ internal fun CourierWebView(
                 ViewGroup.LayoutParams.MATCH_PARENT,
             )
 
+            webViewClient = buildCourierWebViewClient(
+                onSuccessCallback = onSuccessCallback,
+                onFailCallback = onFailCallback,
+                onErrorCallback = onErrorCallback,
+                onCancelCallback = onCancelCallback
+            )
+
+            webChromeClient = buildWebChromeClient()
+
             settings.javaScriptEnabled = true
             settings.allowContentAccess = true
             settings.domStorageEnabled = true
@@ -29,9 +41,11 @@ internal fun CourierWebView(
             settings.mediaPlaybackRequiresUserGesture = true
 
             addJavascriptInterface(
-                /* object = */ buildJavascriptInterface(
-                    onSuccess = onSuccess,
-                    onUnSuccess = onUnSuccessCallback
+                /* object = */ buildCourierJavascriptInterface(
+                    onSuccessCallback = onSuccessCallback,
+                    onFailCallback = onFailCallback,
+                    onErrorCallback = onErrorCallback,
+                    onCancelCallback = onCancelCallback
                 ),
                 /* name = */ "CitiboxCourierSDK"
             )
@@ -41,44 +55,4 @@ internal fun CourierWebView(
         update = {
             it.loadUrl(url)
         })
-}
-
-internal typealias OnSuccessCallback = (
-    boxNumber: String,
-    citiboxId: String,
-    deliveryId: String
-) -> Unit
-
-internal typealias OnUnSuccessCallback = (
-    code: String
-) -> Unit
-
-internal fun buildJavascriptInterface(
-    onSuccess: OnSuccessCallback,
-    onUnSuccess: OnUnSuccessCallback
-) = object {
-
-    @JavascriptInterface
-    fun onSuccess(
-        boxNumber: String,
-        citiboxId: String,
-        deliveryId: String
-    ) {
-        onSuccess(boxNumber, citiboxId, deliveryId)
-    }
-
-    @JavascriptInterface
-    fun onFail(failureCode: String) {
-
-    }
-
-    @JavascriptInterface
-    fun onError(errorCode: String) {
-
-    }
-
-    @JavascriptInterface
-    fun onCancel(cancelCode: String) {
-
-    }
 }
