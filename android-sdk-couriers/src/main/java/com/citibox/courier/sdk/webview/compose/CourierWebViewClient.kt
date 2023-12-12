@@ -1,6 +1,7 @@
 package com.citibox.courier.sdk.webview.compose
 
 import android.net.Uri
+import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -83,4 +84,14 @@ internal fun buildCourierWebViewClient(
                 super.shouldOverrideUrlLoading(view, request)
             }
         }
+
+    override fun onReceivedError(
+        view: WebView?,
+        request: WebResourceRequest?,
+        error: WebResourceError?
+    ) {
+        super.onReceivedError(view, request, error)
+
+        onErrorCallback(TransactionError.LAUNCHING_PROBLEM.code)
+    }
 }
