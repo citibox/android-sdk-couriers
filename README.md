@@ -11,7 +11,9 @@ Library and example of how to integrate with Cibitox services for deliveries
 ## Requirements
 
 Contact our partners at Citibox to get your ACCESS TOKEN
+
 It's recommended to have Couriers App installed to get all the features and maybe the best user experience
+
 If no Couriers App is installed, this SDK will show you the web app version with all the features needed in order to deliver your parcels
 
 ## Documentation
