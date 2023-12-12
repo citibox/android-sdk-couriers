@@ -8,6 +8,12 @@ Works with Courier app installed or via web view
 
 Library and example of how to integrate with Cibitox services for deliveries
 
+## Requirements
+
+Contact our partners at Citibox to get your ACCESS TOKEN
+It's recommended to have Couriers App installed to get all the features and maybe the best user experience
+If no Couriers App is installed, this SDK will show you the web app version with all the features needed in order to deliver your parcels
+
 ## Documentation
 
 ### How to use
@@ -30,8 +36,8 @@ And now, when your code needs to launch Citibox delivery process, pack the data 
 
 ```kotlin
 val data = DeliveryParams(
-    accessToken = "XXX",
-    tracking = "AAA-BBB-CCC",
+    accessToken = "ACCESS_TOKEN_PROVIDED_BY_CITIBOX",
+    tracking = "YOUR-ALPHANUMERIC-TRACKING-CODE",
     recipientPhone = "+34600600600",
     isPhoneHashed = false,
     dimensions = "10x20x30",
@@ -67,15 +73,15 @@ When the delivery went well, the result will give you an instance of `DeliveryRe
 When the delivery couldn't be executed for some reason related to the Box or the user, you'll receive an instance of `DeliveryResult.Failure` with the field `type` telling you what went wrong.
 
 #### Failure codes
-| Type                          | Description |
-|-------------------------------|-------------|
-| `parcel_not_available`        |             |
-| `max_reopens_exceed`          |             |
-| `empty_box`                   |             |
-| `box_not_available`           |             |
-| `user_blocked`                |             |
-| `user_autocreation_forbidden` |             |
-| `any_box_empty`               |             |
+| Type                          | Description                                                                                              |
+|-------------------------------|----------------------------------------------------------------------------------------------------------|
+| `parcel_not_available`        | The package couldn’t be in the required state.                                                           |
+| `max_reopens_exceed`          | The tries to open boxes has been exceeded.                                                               |
+| `empty_box`                   | There isn’t a packet into box.                                                                           |
+| `box_not_available`           | If in the location there are no free boxes of the proper size.                                           |
+| `user_blocked`                | If the addressee is blocked.                                                                             |
+| `user_autocreation_forbidden` | The user is not registered in Citibox and the carrier does not allow deliveries to non registered users. |
+| `any_box_empty`               | The maximum number of opening boxes tries have been exceeded.                                            |
 
 #### Cancel
 When the delivery couldn't be done because the Courier canceled the delivery for external reasons or reasons related to the box, you'll receive an instance of `DeliveryResult.Cancel` with the field `type` with the code.
