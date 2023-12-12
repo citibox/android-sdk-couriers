@@ -1,0 +1,37 @@
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+
+  create_github_release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Import secrets
+        uses: hashicorp/vault-action@v2.1.0
+        with:
+          url: https://vault.citiboxlab.com
+          method: approle
+          roleId: ${{ secrets.VAULT_ROLE_ID }}
+          secretId: ${{ secrets.VAULT_SECRET_ID }}
+          secrets: |
+            kv/github/pat/all-repo-access token | GITHUB_ACCESS_TOKEN ;
+
+      - name: Extract release notes from Changelog
+        id: extract-release-notes
+        uses: ffurrer2/extract-release-notes@v1
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{ steps.extract-release-notes.outputs.release_notes }}
+          draf: false
+          prerelease: false
+          token: ${{ env.GITHUB_ACCESS_TOKEN }}
+          repository: citibox/android-sdk-couriers
