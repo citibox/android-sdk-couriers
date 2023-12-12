@@ -1,5 +1,3 @@
-import com.android.build.gradle.internal.api.VariantFilter
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -17,13 +15,13 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "WEBAPP_URL", "\"https://couriers.citibox.com/\"")
+        buildConfigField("String", "WEBAPP_URL", "\"app.courier.citibox.com\"")
 
     }
 
     buildTypes {
         debug {
-            buildConfigField("String", "WEBAPP_URL", "\"http://app.courier.citibox-sandbox.com/\"")
+            buildConfigField("String", "WEBAPP_URL", "\"http://app.courier.citibox-sandbox.com\"")
         }
         release {
             isMinifyEnabled = false
