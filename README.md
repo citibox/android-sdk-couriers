@@ -20,6 +20,26 @@ If no Couriers App is installed, this SDK will show you the web app version with
 
 ### How to use
 
+USe JitPack in your main `build.gradle.kts`
+
+```kotlin
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+Add the dependency in your `build.gradle.kts`
+
+```kotlin
+dependencies {
+    implementation("com.github.citibox:android-sdk-couriers:1.0.0")
+}
+```
+
 In your `Activity` of `Fragment` declare a variable of type `DeliveryLauncher`:
 
 ```kotlin

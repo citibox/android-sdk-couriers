@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.api.VariantFilter
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -20,6 +22,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "WEBAPP_URL", "\"http://app.courier.citibox-sandbox.com/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
