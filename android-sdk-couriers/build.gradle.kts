@@ -15,13 +15,13 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "WEBAPP_URL", "\"app.courier.citibox.com\"")
+        buildConfigField("String", "WEBAPP_URL", "\"https://app.courier.citibox.com\"")
 
     }
 
     buildTypes {
         debug {
-            buildConfigField("String", "WEBAPP_URL", "\"http://app.courier.citibox-sandbox.com\"")
+            buildConfigField("String", "WEBAPP_URL", "\"https://app.courier.citibox-sandbox.com/\"")
         }
         release {
             isMinifyEnabled = false
