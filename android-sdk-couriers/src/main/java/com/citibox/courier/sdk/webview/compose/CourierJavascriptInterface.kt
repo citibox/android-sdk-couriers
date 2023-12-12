@@ -10,8 +10,19 @@ internal fun buildCourierJavascriptInterface(
     onFailCallback: OnUnSuccessCallback,
     onErrorCallback: OnUnSuccessCallback,
     onCancelCallback: OnUnSuccessCallback,
-) = object {
+) = CourierJavascriptInterface(
+    onSuccessCallback = onSuccessCallback,
+    onFailCallback = onFailCallback,
+    onErrorCallback = onErrorCallback,
+    onCancelCallback = onCancelCallback
+)
 
+internal class CourierJavascriptInterface(
+    private val onSuccessCallback: OnSuccessCallback,
+    private val onFailCallback: OnUnSuccessCallback,
+    private val onErrorCallback: OnUnSuccessCallback,
+    private val onCancelCallback: OnUnSuccessCallback,
+) {
     @JavascriptInterface
     fun onSuccess(
         boxNumber: String,
@@ -20,10 +31,10 @@ internal fun buildCourierJavascriptInterface(
     ) {
         onSuccessCallback(
             SuccessData(
-            boxNumber = boxNumber,
-            citiboxId = citiboxId,
-            deliveryId = deliveryId
-        )
+                boxNumber = boxNumber,
+                citiboxId = citiboxId,
+                deliveryId = deliveryId
+            )
         )
     }
 

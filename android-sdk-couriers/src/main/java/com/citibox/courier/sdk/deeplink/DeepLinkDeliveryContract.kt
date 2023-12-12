@@ -39,7 +39,7 @@ internal class DeepLinkDeliveryContract :
                 }
                 val boxNumber = requireNotNull(validIntent.extras?.getInt(EXTRA_BOX_NUMBER)) {
                     "Missing box number"
-                }
+                }.toString()
                 val citiboxId = validIntent.getStringExtra(EXTRA_CITIBOX_ID).orEmpty()
                 val deliveryId = validIntent.getStringExtra(EXTRA_DELIVERY_ID).orEmpty()
                 DeliveryResult.Success(
