@@ -34,6 +34,12 @@ class WebViewActivity : ComponentActivity() {
     private val dimensions: String
         get() = intent.getStringExtra(EXTRA_DIMENSIONS) ?: ""
 
+    private val permissionsRequester =
+        PermissionsRequester(
+            activity = this,
+            permissions = listOf(android.Manifest.permission.CAMERA),
+        )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -53,6 +59,8 @@ class WebViewActivity : ComponentActivity() {
                 }
             }
         }
+
+        permissionsRequester.askPermissionsRationale()
     }
 
     private val url: String
