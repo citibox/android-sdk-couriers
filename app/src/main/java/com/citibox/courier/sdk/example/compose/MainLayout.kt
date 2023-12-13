@@ -1,5 +1,6 @@
 package com.citibox.courier.sdk.example.compose
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -48,6 +50,11 @@ fun MainLayout(
                 .padding(paddingValues)
                 .padding(bottom = 16.dp),
         ) {
+
+            AnimatedVisibility(visible = state.resultMessage.isNotEmpty()) {
+                ResultCard(resultMessage = state.resultMessage)
+            }
+
             InputDataField(
                 textDefault = state.token,
                 label = "Access token *",
@@ -102,26 +109,43 @@ fun MainLayout(
                     text = "Launch Citibox Delivery",
                 )
             }
+        }
+    }
+}
 
-            if (state.resultMessage.isNotEmpty()) {
-                Text(
-                    text = "Result", style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
+@Composable
+fun ResultCard(resultMessage: String) {
+    Card(
+        modifier = Modifier
+            .padding(
+                horizontal = 16.dp,
+                vertical = 8.dp,
+            )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(
+                    vertical = 16.dp,
+                    horizontal = 0.dp
                 )
+        ) {
+            Text(
+                text = "Result", style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+            )
 
-                SelectionContainer {
-                    Text(
-                        text = state.resultMessage,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                top = 8.dp,
-                                start = 16.dp,
-                                end = 16.dp,
-                            )
-                    )
-                }
+            SelectionContainer {
+                Text(
+                    text = resultMessage,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = 8.dp,
+                            start = 16.dp,
+                            end = 16.dp,
+                        )
+                )
             }
         }
     }
