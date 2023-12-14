@@ -42,8 +42,8 @@ dependencies {
 
 ### Delivery parcel
 
-In order to start the delivery process, [check out how to use it](DELIVERY.md)
+[How to start the delivery process](DELIVERY.md)
 
 ### Parcel collection
 
-In order to start the collection process, [check out how to use it](COLLECTION.md)
+[How to start the collection process](COLLECTION.md)
