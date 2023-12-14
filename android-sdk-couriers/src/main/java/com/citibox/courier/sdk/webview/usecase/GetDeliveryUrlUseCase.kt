@@ -14,15 +14,23 @@ class GetDeliveryUrlUseCase {
         phoneHashed: String,
         dimensions: String
     ): String {
-        val base = when(environment){
-            WebAppEnvironment.Production -> BuildConfig.WEBAPP_PRO_URL
-            WebAppEnvironment.Sandbox -> BuildConfig.WEBAPP_SANDBOX_URL
-            WebAppEnvironment.Test -> BuildConfig.WEBAPP_TEST_URL
-            WebAppEnvironment.Local -> BuildConfig.WEBAPP_LOCAL_URL
+        val (base, segment) = when (environment) {
+            WebAppEnvironment.Production -> BuildConfig.WEBAPP_PRO_URL to
+                    BuildConfig.WEBAPP_SEGMENT_DELIVERY
+
+            WebAppEnvironment.Sandbox -> BuildConfig.WEBAPP_SANDBOX_URL to
+                    BuildConfig.WEBAPP_SEGMENT_DELIVERY
+
+            WebAppEnvironment.Test -> BuildConfig.WEBAPP_TEST_URL to
+                    BuildConfig.WEBAPP_SEGMENT_TEST
+
+            WebAppEnvironment.Local -> BuildConfig.WEBAPP_LOCAL_URL to
+                    BuildConfig.WEBAPP_SEGMENT_DELIVERY
         }
 
         return base.toUri()
             .buildUpon()
+            .appendPath(segment)
             .appendQueryParameter(PARAM_ACCESS_TOKEN, accessToken)
             .appendQueryParameter(PARAM_TRACKING, tracking)
             .appendQueryParameter(PARAM_PHONE, phone)
