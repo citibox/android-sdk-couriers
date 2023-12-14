@@ -25,8 +25,8 @@ internal class CourierJavascriptInterface(
 ) {
     @JavascriptInterface
     fun onSuccess(
-        boxNumber: String,
-        citiboxId: String,
+        boxNumber: Int,
+        citiboxId: Int,
         deliveryId: String
     ) {
         onSuccessCallback(

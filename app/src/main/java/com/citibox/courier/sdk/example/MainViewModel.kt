@@ -6,6 +6,7 @@ import com.citibox.courier.sdk.example.models.MainSideEffect
 import com.citibox.courier.sdk.example.models.MainState
 import com.citibox.courier.sdk.domain.DeliveryParams
 import com.citibox.courier.sdk.domain.DeliveryResult
+import com.citibox.courier.sdk.webview.models.WebAppEnvironment
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,6 +32,9 @@ class MainViewModel : ViewModel() {
 
     fun onDimensionsChanged(value: String) = _state.update { it.copy(dimensions = value) }
 
+    fun onEnvironmentChanged(environment: WebAppEnvironment) =
+        _state.update { it.copy(environment = environment) }
+
     fun onLaunch() {
         viewModelScope.launch {
 
@@ -41,7 +45,8 @@ class MainViewModel : ViewModel() {
                 tracking = _state.value.tracking,
                 recipientPhone = _state.value.phone,
                 isPhoneHashed = _state.value.phoneHashed,
-                dimensions = _state.value.dimensions
+                dimensions = _state.value.dimensions,
+                webAppEnvironment = _state.value.environment
             )
 
             _sideEffect.trySend(MainSideEffect.Launch(param))

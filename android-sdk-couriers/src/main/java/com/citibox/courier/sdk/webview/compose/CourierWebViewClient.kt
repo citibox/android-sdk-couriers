@@ -25,11 +25,13 @@ internal fun buildCourierWebViewClient(
     onFailCallback: OnUnSuccessCallback,
     onErrorCallback: OnUnSuccessCallback,
     onCancelCallback: OnUnSuccessCallback,
+    onLoading: (Boolean) -> Unit,
 ) = CourierWebViewClient(
     onSuccessCallback = onSuccessCallback,
     onFailCallback = onFailCallback,
     onErrorCallback = onErrorCallback,
-    onCancelCallback = onCancelCallback
+    onCancelCallback = onCancelCallback,
+    onLoading = onLoading,
 )
 
 internal class CourierWebViewClient(
@@ -37,7 +39,8 @@ internal class CourierWebViewClient(
     private val onFailCallback: OnUnSuccessCallback,
     private val onErrorCallback: OnUnSuccessCallback,
     private val onCancelCallback: OnUnSuccessCallback,
-):  WebViewClient() {
+    private val onLoading: (Boolean) -> Unit,
+) : WebViewClient() {
     override fun shouldOverrideUrlLoading(
         view: WebView?,
         request: WebResourceRequest?,
@@ -68,25 +71,29 @@ internal class CourierWebViewClient(
             }
 
             else -> {
+                onLoading(true)
                 super.shouldOverrideUrlLoading(view, request)
             }
         }
+
+    override fun onPageFinished(view: WebView?, url: String?) {
+        super.onPageFinished(view, url)
+        onLoading(false)
+    }
 
     override fun onReceivedError(
         view: WebView?,
         request: WebResourceRequest?,
         error: WebResourceError?
     ) {
-        super.onReceivedError(view, request, error)
-
-        //onErrorCallback(TransactionError.LAUNCHING_PROBLEM.code)
+        onErrorCallback(TransactionError.LAUNCHING_PROBLEM.code)
     }
 
     private fun Uri?.isSuccess(): Boolean = this?.path?.contains(PATH_SUCCESS) ?: false
 
     private fun Uri?.extractSuccessData(): SuccessData? {
-        val boxNumber = this?.getQueryParameter(QUERY_BOX_NUMBER)
-        val citiboxId = this?.getQueryParameter(QUERY_CITIBOX_ID)
+        val boxNumber = this?.getQueryParameter(QUERY_BOX_NUMBER)?.toIntOrNull()
+        val citiboxId = this?.getQueryParameter(QUERY_CITIBOX_ID)?.toIntOrNull()
         val deliveryId = this?.getQueryParameter(QUERY_DELIVERY_ID)
 
         return if (boxNumber != null && citiboxId != null && deliveryId != null) {

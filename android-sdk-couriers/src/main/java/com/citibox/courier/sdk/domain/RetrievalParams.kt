@@ -2,11 +2,8 @@ package com.citibox.courier.sdk.domain
 
 import com.citibox.courier.sdk.webview.models.WebAppEnvironment
 
-data class DeliveryParams(
+data class RetrievalParams(
     val accessToken: String,
-    val tracking: String,
-    val recipientPhone: String,
-    val isPhoneHashed: Boolean = true,
-    val dimensions: String? = null,
+    val citiboxId: String,
     val webAppEnvironment: WebAppEnvironment
 )

@@ -2,17 +2,24 @@ package com.citibox.courier.sdk.webview.usecase
 
 import androidx.core.net.toUri
 import com.citibox.courier.sdk.BuildConfig
+import com.citibox.courier.sdk.webview.models.WebAppEnvironment
 
-class GetUrlUseCase {
+class GetDeliveryUrlUseCase {
 
     operator fun invoke(
+        environment: WebAppEnvironment,
         accessToken: String,
         tracking: String,
         phone: String,
         phoneHashed: String,
         dimensions: String
     ): String {
-        val base = BuildConfig.WEBAPP_URL
+        val base = when(environment){
+            WebAppEnvironment.Production -> BuildConfig.WEBAPP_PRO_URL
+            WebAppEnvironment.Sandbox -> BuildConfig.WEBAPP_SANDBOX_URL
+            WebAppEnvironment.Test -> BuildConfig.WEBAPP_TEST_URL
+            WebAppEnvironment.Local -> BuildConfig.WEBAPP_LOCAL_URL
+        }
 
         return base.toUri()
             .buildUpon()
