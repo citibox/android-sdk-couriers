@@ -27,10 +27,10 @@ internal class WebViewDeliveryContract :
                 val validIntent = requireNotNull(intent) {
                     "Intent mus not be null when result is OK"
                 }
-                val boxNumber =
-                    validIntent.extras?.getString(WebViewActivity.EXTRA_BOX_NUMBER).orEmpty()
-                val citiboxId =
-                    validIntent.getStringExtra(WebViewActivity.EXTRA_CITIBOX_ID).orEmpty()
+                val boxNumber = validIntent.getIntExtra(WebViewActivity.EXTRA_BOX_NUMBER, Int.MIN_VALUE)
+
+                val citiboxId = validIntent.getIntExtra(WebViewActivity.EXTRA_CITIBOX_ID, Int.MIN_VALUE)
+
                 val deliveryId =
                     validIntent.getStringExtra(WebViewActivity.EXTRA_DELIVERY_ID).orEmpty()
                 DeliveryResult.Success(

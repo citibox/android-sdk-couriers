@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import com.citibox.courier.sdk.domain.DeliveryParams
 import com.citibox.courier.sdk.domain.DeliveryResult
 import com.citibox.courier.sdk.domain.TransactionCancel
+import com.citibox.courier.sdk.domain.TransactionError
 import com.citibox.courier.sdk.domain.TransactionResult
 import java.security.MessageDigest
 
@@ -33,20 +34,24 @@ internal class DeepLinkDeliveryContract :
 
     override fun parseResult(resultCode: Int, intent: Intent?): DeliveryResult =
         when (resultCode) {
-            Activity.RESULT_OK -> {
+            Activity.RESULT_OK -> runCatching {
                 val validIntent = requireNotNull(intent) {
                     "Intent mus not be null when result is OK"
                 }
                 val boxNumber = requireNotNull(validIntent.extras?.getInt(EXTRA_BOX_NUMBER)) {
                     "Missing box number"
-                }.toString()
-                val citiboxId = validIntent.getStringExtra(EXTRA_CITIBOX_ID).orEmpty()
+                }
+                val citiboxId = requireNotNull(validIntent.extras?.getInt(EXTRA_CITIBOX_ID)) {
+                    "Missing Citibox ID"
+                }
                 val deliveryId = validIntent.getStringExtra(EXTRA_DELIVERY_ID).orEmpty()
                 DeliveryResult.Success(
                     boxNumber = boxNumber,
                     citiboxId = citiboxId,
                     deliveryId = deliveryId,
                 )
+            }.getOrElse {
+                DeliveryResult.Error(TransactionError.DATA_NOT_RECEIVED.code)
             }
 
             else ->

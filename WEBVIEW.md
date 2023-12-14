@@ -26,7 +26,7 @@ Two communication mechanisms have been implemented:
 
 There is an object exposed to Javascript called `CitiboxCourierSDK` with four methods:
 
-- `onSuccess(boxNumber: String, citiboxId: String, deliveryId: String)`
+- `onSuccess(boxNumber: Int, citiboxId: Int, deliveryId: String)`
 - `onFail(failureCode: String)`
 - `onError(errorCode: String)`
 - `onCancel(cancelCode: String)`
