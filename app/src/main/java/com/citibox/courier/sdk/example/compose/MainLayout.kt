@@ -36,6 +36,7 @@ fun MainLayout(
     onDimensionsChanged: (String) -> Unit,
     onEnvironmentChanged: (WebAppEnvironment) -> Unit,
     onLaunchClicked: () -> Unit,
+    onResultClearClicked: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -52,24 +53,27 @@ fun MainLayout(
         ) {
 
             AnimatedVisibility(visible = state.resultMessage.isNotEmpty()) {
-                ResultCard(resultMessage = state.resultMessage)
+                ResultCard(
+                    resultMessage = state.resultMessage,
+                    onClear = onResultClearClicked
+                )
             }
 
             InputDataField(
                 textDefault = state.token,
-                label = "Access token *",
+                label = "🔑 Access token *",
                 isMandatory = true,
                 onValueChanged = onAccessChanged,
             )
             InputDataField(
                 textDefault = state.tracking,
-                label = "Tracking *",
+                label = "🪪 Tracking *",
                 isMandatory = true,
                 onValueChanged = onTrackingChanged,
             )
             InputDataField(
                 textDefault = state.phone,
-                label = "Phone *",
+                label = "☎️ Phone *",
                 isMandatory = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 onValueChanged = onPhoneChanged,
@@ -93,7 +97,7 @@ fun MainLayout(
             }
             InputDataField(
                 textDefault = state.dimensions,
-                label = "Dimensions ([mm]x[mm]x[mm])",
+                label = "📐 Dimensions ([mm]x[mm]x[mm])",
                 onValueChanged = onDimensionsChanged,
             )
             EnvironmentSelector(

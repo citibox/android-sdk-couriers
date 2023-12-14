@@ -15,10 +15,14 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "WEBAPP_PRO_URL", "\"https://app.courier.citibox.com/deeplink-delivery\"")
-        buildConfigField("String", "WEBAPP_SANDBOX_URL", "\"https://app.courier.citibox-sandbox.com/deeplink-delivery\"")
-        buildConfigField("String", "WEBAPP_LOCAL_URL", "\"http://192.168.1.157:8080/deeplink-delivery\"")
-        buildConfigField("String", "WEBAPP_TEST_URL", "\"http://192.168.1.157:8080/test-view\"")
+        buildConfigField("String", "WEBAPP_PRO_URL", "\"https://app.courier.citibox.com/\"")
+        buildConfigField("String", "WEBAPP_SANDBOX_URL", "\"https://app.courier.citibox-sandbox.com/\"")
+        buildConfigField("String", "WEBAPP_LOCAL_URL", "\"http://192.168.1.157:8080/\"")
+        buildConfigField("String", "WEBAPP_TEST_URL", "\"http://192.168.1.157:8080/\"")
+
+        buildConfigField("String", "WEBAPP_SEGMENT_DELIVERY", "\"deeplink-delivery\"")
+        buildConfigField("String", "WEBAPP_SEGMENT_RETRIEVAL", "\"deeplink-retrieval\"")
+        buildConfigField("String", "WEBAPP_SEGMENT_TEST", "\"test-view\"")
 
     }
 
