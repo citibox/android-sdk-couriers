@@ -38,8 +38,8 @@ Example for success:
 
 ```js
     function success(boxNumber, citiboxId, deliveryId){
-        if (CitiboxCourierSDK) {
-            CitiboxCourierSDK.onSuccess(boxNumber, citiboxId, deliveryId)
+        if (window.CitiboxCourierSDK) {
+            window.CitiboxCourierSDK.onSuccess(boxNumber, citiboxId, deliveryId)
         }
     }
 ```

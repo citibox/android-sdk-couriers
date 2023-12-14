@@ -2,6 +2,7 @@ package com.citibox.courier.sdk.webview.compose
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
+import android.webkit.CookieManager
 import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.compose.runtime.Composable
@@ -35,10 +36,12 @@ internal fun CourierWebView(
             webChromeClient = buildWebChromeClient()
 
             settings.javaScriptEnabled = true
+            settings.javaScriptCanOpenWindowsAutomatically = false
             settings.allowContentAccess = true
             settings.domStorageEnabled = true
             settings.cacheMode = WebSettings.LOAD_DEFAULT
-            settings.mediaPlaybackRequiresUserGesture = true
+            settings.mediaPlaybackRequiresUserGesture = false
+            settings.databaseEnabled = true
 
             addJavascriptInterface(
                 /* object = */ buildCourierJavascriptInterface(
@@ -49,6 +52,9 @@ internal fun CourierWebView(
                 ),
                 /* name = */ "CitiboxCourierSDK"
             )
+
+            CookieManager.getInstance().setAcceptThirdPartyCookies(this, true)
+
             loadUrl(url)
         }
     },
