@@ -53,6 +53,12 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun onResultClear() {
+        _state.update {
+            it.copy(resultMessage = "")
+        }
+    }
+
     fun deliveryResult(result: DeliveryResult) {
         viewModelScope.launch {
             val msg = when (result) {

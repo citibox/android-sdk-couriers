@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+### Added
+- URL split for url usage
+
 ## [1.1.0] 2023-12-14
 ### Added
 - Environments from selector
