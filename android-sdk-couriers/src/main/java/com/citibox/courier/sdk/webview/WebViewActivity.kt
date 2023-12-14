@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.citibox.courier.sdk.domain.DeliveryParams
+import com.citibox.courier.sdk.domain.TransactionCancel
 import com.citibox.courier.sdk.domain.TransactionResult
 import com.citibox.courier.sdk.theme.AndroidsdkcouriersTheme
 import com.citibox.courier.sdk.webview.compose.CourierWebView
@@ -60,7 +61,14 @@ class WebViewActivity : ComponentActivity() {
             }
         }
 
+        setDefaultResult()
         permissionsRequester.askPermissionsRationale()
+    }
+
+    private fun setDefaultResult(){
+        setResult(RESULT_CANCELED, Intent().apply {
+            putExtra(TransactionResult.FAILURE_CODE_KEY.code, TransactionCancel.NOT_STARTED.code)
+        })
     }
 
     private val url: String

@@ -36,7 +36,7 @@ internal fun CourierWebView(
             webChromeClient = buildWebChromeClient()
 
             settings.javaScriptEnabled = true
-            settings.javaScriptCanOpenWindowsAutomatically = true
+            settings.javaScriptCanOpenWindowsAutomatically = false
             settings.allowContentAccess = true
             settings.domStorageEnabled = true
             settings.cacheMode = WebSettings.LOAD_DEFAULT
