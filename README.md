@@ -71,14 +71,14 @@ citriboxLauncher.launch(data)
 
 The data class `DeliveryParams` is the input for launching the delivery process
 
-| Param            | Type              | Description                                                                                                                                                                        |  
-|------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
-| `accessToken`    | String            | Token that identifies you as a courier                                                                                                                                             |  
-| `tracking`       | String            | Tracking code                                                                                                                                                                      |  
-| `isPhoneHashed`  | Boolean           | Tells that the phone number will be hashed instead of using the actual phone number                                                                                                |  
-| `recipientPhone` | String            | The recipients phone                                                                                                                                                               |  
-| `dimensions`     | String?           | Optional param to tell how big the parcel is, must follow the format [mm]x[mm]x[mm]                                                                                                |  
-| `environment`    | WebAppEnvironment | There are three available environments: Production, Sandbox and Test. Make sure to perform all your tests using Sandbox and when building your release this settings is Production |  
+| Param            | Type              | Description                                                                                                                                                                                                                                                          |  
+|------------------|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| `accessToken`    | String            | Token that identifies you as a courier                                                                                                                                                                                                                               |  
+| `tracking`       | String            | Tracking code                                                                                                                                                                                                                                                        |  
+| `isPhoneHashed`  | Boolean           | Tells that the phone number will be hashed instead of using the actual phone number                                                                                                                                                                                  |  
+| `recipientPhone` | String            | The recipients phone                                                                                                                                                                                                                                                 |  
+| `dimensions`     | String?           | Optional param to tell how big the parcel is, must follow the format [mm]x[mm]x[mm]                                                                                                                                                                                  |  
+| `environment`    | WebAppEnvironment | ⚠️ This setting only affects to the WebView and not to the Courier App.<br />There are three available environments: Production, Sandbox and Test.<br />Make sure to perform all your tests using Sandbox and when building your release this settings is Production |  
 
 
 ### Results
