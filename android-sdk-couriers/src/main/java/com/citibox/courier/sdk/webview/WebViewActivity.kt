@@ -17,7 +17,7 @@ import com.citibox.courier.sdk.theme.AndroidsdkcouriersTheme
 import com.citibox.courier.sdk.webview.compose.CourierWebView
 import com.citibox.courier.sdk.webview.models.SuccessData
 import com.citibox.courier.sdk.webview.models.WebAppEnvironment
-import com.citibox.courier.sdk.webview.usecase.GetUrlUseCase
+import com.citibox.courier.sdk.webview.usecase.GetDeliveryUrlUseCase
 import java.security.MessageDigest
 
 class WebViewActivity : ComponentActivity() {
@@ -81,7 +81,7 @@ class WebViewActivity : ComponentActivity() {
     }
 
     private val url: String
-        get() = GetUrlUseCase().invoke(
+        get() = GetDeliveryUrlUseCase().invoke(
             environment = environment,
             accessToken = token,
             tracking = tracking,

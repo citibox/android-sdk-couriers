@@ -44,6 +44,6 @@ dependencies {
 
 [How to start the delivery process](DELIVERY.md)
 
-### Parcel collection
+### Parcel retrieval
 
-[How to start the collection process](COLLECTION.md)
+[How to start the retrieval process](RETRIEVAL.md)

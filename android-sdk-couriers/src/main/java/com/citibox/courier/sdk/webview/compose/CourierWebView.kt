@@ -1,6 +1,7 @@
 package com.citibox.courier.sdk.webview.compose
 
 import android.annotation.SuppressLint
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.webkit.WebSettings
@@ -31,48 +32,51 @@ internal fun CourierWebView(
     }
 
     Box {
-        AndroidView(factory = { context ->
-            WebView(context).apply {
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                )
+        AndroidView(
+            factory = { context ->
+                WebView(context).apply {
+                    setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 
-                webViewClient = buildCourierWebViewClient(
-                    onSuccessCallback = onSuccessCallback,
-                    onFailCallback = onFailCallback,
-                    onErrorCallback = onErrorCallback,
-                    onCancelCallback = onCancelCallback,
-                    onLoading = { loading ->
-                        isLoading = loading
-                    }
-                )
+                    layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                    )
 
-                webChromeClient = buildWebChromeClient()
-
-                settings.javaScriptEnabled = true
-                settings.javaScriptCanOpenWindowsAutomatically = false
-                settings.allowContentAccess = true
-                settings.domStorageEnabled = true
-                settings.cacheMode = WebSettings.LOAD_DEFAULT
-                settings.mediaPlaybackRequiresUserGesture = false
-                settings.databaseEnabled = true
-
-                addJavascriptInterface(
-                    /* object = */ buildCourierJavascriptInterface(
+                    webViewClient = buildCourierWebViewClient(
                         onSuccessCallback = onSuccessCallback,
                         onFailCallback = onFailCallback,
                         onErrorCallback = onErrorCallback,
-                        onCancelCallback = onCancelCallback
-                    ),
-                    /* name = */ "CitiboxCourierSDK"
-                )
+                        onCancelCallback = onCancelCallback,
+                        onLoading = { loading ->
+                            isLoading = loading
+                        }
+                    )
 
-                CookieManager.getInstance().setAcceptThirdPartyCookies(this, true)
+                    webChromeClient = buildWebChromeClient()
 
-                loadUrl(url)
-            }
-        },
+                    settings.javaScriptEnabled = true
+                    settings.javaScriptCanOpenWindowsAutomatically = false
+                    settings.allowContentAccess = true
+                    settings.domStorageEnabled = true
+                    settings.cacheMode = WebSettings.LOAD_DEFAULT
+                    settings.mediaPlaybackRequiresUserGesture = false
+                    settings.databaseEnabled = true
+
+                    addJavascriptInterface(
+                        /* object = */ buildCourierJavascriptInterface(
+                            onSuccessCallback = onSuccessCallback,
+                            onFailCallback = onFailCallback,
+                            onErrorCallback = onErrorCallback,
+                            onCancelCallback = onCancelCallback
+                        ),
+                        /* name = */ "CitiboxCourierSDK"
+                    )
+
+                    CookieManager.getInstance().setAcceptThirdPartyCookies(this, true)
+
+                    loadUrl(url)
+                }
+            },
             update = {
                 it.loadUrl(url)
             }

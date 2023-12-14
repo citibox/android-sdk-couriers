@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -85,4 +86,5 @@ private fun WebAppEnvironment.icon(): ImageVector = when (this) {
     WebAppEnvironment.Production -> Icons.Outlined.CheckCircle
     WebAppEnvironment.Sandbox -> Icons.Outlined.Build
     WebAppEnvironment.Test -> Icons.Outlined.Warning
+    WebAppEnvironment.Local -> Icons.Outlined.Home
 }
