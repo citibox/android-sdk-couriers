@@ -2,6 +2,7 @@ package com.citibox.courier.sdk.webview
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +16,7 @@ import com.citibox.courier.sdk.domain.TransactionResult
 import com.citibox.courier.sdk.theme.AndroidsdkcouriersTheme
 import com.citibox.courier.sdk.webview.compose.CourierWebView
 import com.citibox.courier.sdk.webview.models.SuccessData
+import com.citibox.courier.sdk.webview.models.WebAppEnvironment
 import com.citibox.courier.sdk.webview.usecase.GetUrlUseCase
 import java.security.MessageDigest
 
@@ -34,6 +36,13 @@ class WebViewActivity : ComponentActivity() {
 
     private val dimensions: String
         get() = intent.getStringExtra(EXTRA_DIMENSIONS) ?: ""
+
+    private val environment: WebAppEnvironment
+        get() = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(EXTRA_ENVIRONMENT, WebAppEnvironment::class.java)
+        } else {
+            intent.getSerializableExtra(EXTRA_ENVIRONMENT) as WebAppEnvironment
+        }) ?: WebAppEnvironment.Production
 
     private val permissionsRequester =
         PermissionsRequester(
@@ -65,7 +74,7 @@ class WebViewActivity : ComponentActivity() {
         permissionsRequester.askPermissionsRationale()
     }
 
-    private fun setDefaultResult(){
+    private fun setDefaultResult() {
         setResult(RESULT_CANCELED, Intent().apply {
             putExtra(TransactionResult.FAILURE_CODE_KEY.code, TransactionCancel.NOT_STARTED.code)
         })
@@ -73,6 +82,7 @@ class WebViewActivity : ComponentActivity() {
 
     private val url: String
         get() = GetUrlUseCase().invoke(
+            environment = environment,
             accessToken = token,
             tracking = tracking,
             phone = phone,
@@ -122,12 +132,16 @@ class WebViewActivity : ComponentActivity() {
         const val EXTRA_PHONE = "WebViewActivity:phone"
         const val EXTRA_PHONE_HASHED = "WebViewActivity:phone_hashed"
         const val EXTRA_DIMENSIONS = "WebViewActivity:dimensions"
+        const val EXTRA_ENVIRONMENT = "WebViewActivity:environment"
 
         const val EXTRA_BOX_NUMBER = "box_number"
         const val EXTRA_CITIBOX_ID = "citibox_id"
         const val EXTRA_DELIVERY_ID = "delivery_id"
 
-        fun buildIntent(context: Context, input: DeliveryParams): Intent =
+        fun buildIntent(
+            context: Context,
+            input: DeliveryParams,
+        ): Intent =
             Intent(context, WebViewActivity::class.java).apply {
                 putExtra(EXTRA_TOKEN, input.accessToken)
                 putExtra(EXTRA_TRACKING, input.tracking)
@@ -138,6 +152,8 @@ class WebViewActivity : ComponentActivity() {
                 } else {
                     putExtra(EXTRA_PHONE, input.recipientPhone)
                 }
+
+                putExtra(EXTRA_ENVIRONMENT, input.webAppEnvironment)
             }
 
         private fun String.calculateSHA256(): String {

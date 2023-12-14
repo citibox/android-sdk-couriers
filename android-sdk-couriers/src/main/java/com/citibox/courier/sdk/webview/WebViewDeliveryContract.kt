@@ -11,10 +11,13 @@ import com.citibox.courier.sdk.domain.TransactionResult
 
 internal class WebViewDeliveryContract :
     ActivityResultContract<DeliveryParams, DeliveryResult>() {
-    override fun createIntent(context: Context, input: DeliveryParams): Intent {
+    override fun createIntent(
+        context: Context,
+        input: DeliveryParams,
+    ): Intent {
         return WebViewActivity.buildIntent(
             context,
-            input
+            input,
         )
     }
 

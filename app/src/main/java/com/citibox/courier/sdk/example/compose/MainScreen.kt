@@ -22,6 +22,7 @@ fun MainScreen(
         onPhoneChanged = viewModel::onPhoneChanged,
         onPhoneHashedChanged = viewModel::onPhoneHashedChanged,
         onDimensionsChanged = viewModel::onDimensionsChanged,
+        onEnvironmentChanged = viewModel::onEnvironmentChanged,
         onLaunchClicked = viewModel::onLaunch
     )
 

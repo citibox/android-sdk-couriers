@@ -1,6 +1,11 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- Environments from selector
+
+
+## [Unreleased]
 ### Changed
 - When the web view receives an error then bounces back to the SDK 
 - Added web view contract

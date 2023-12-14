@@ -15,14 +15,13 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "WEBAPP_URL", "\"https://app.courier.citibox.com\"")
+        buildConfigField("String", "WEBAPP_PRO_URL", "\"https://app.courier.citibox.com/deeplink-delivery\"")
+        buildConfigField("String", "WEBAPP_SANDBOX_URL", "\"https://app.courier.citibox-sandbox.com/deeplink-delivery\"")
+        buildConfigField("String", "WEBAPP_TEST_URL", "\"http://192.168.1.157:8080/deeplink-delivery\"")
 
     }
 
     buildTypes {
-        debug {
-            buildConfigField("String", "WEBAPP_URL", "\"https://app.courier.citibox-sandbox.com/\"")
-        }
         release {
             isMinifyEnabled = false
             proguardFiles(
