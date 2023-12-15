@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- Example for retrieval
 - URL split for url usage
 - Destroy web view when finish releasing memory and data
 - Added web view contract for retrieval
