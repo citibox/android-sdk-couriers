@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.citibox.courier.sdk.domain.DeliveryParams
+import com.citibox.courier.sdk.domain.RetrievalParams
 import com.citibox.courier.sdk.domain.TransactionCancel
 import com.citibox.courier.sdk.domain.TransactionResult
 import com.citibox.courier.sdk.theme.AndroidsdkcouriersTheme
@@ -18,37 +19,18 @@ import com.citibox.courier.sdk.webview.compose.CourierWebView
 import com.citibox.courier.sdk.webview.models.SuccessData
 import com.citibox.courier.sdk.webview.models.WebAppEnvironment
 import com.citibox.courier.sdk.webview.usecase.GetDeliveryUrlUseCase
+import com.citibox.courier.sdk.webview.usecase.GetRetrievalUrlUseCase
 import java.security.MessageDigest
 
 class WebViewActivity : ComponentActivity() {
-
-    private val token: String
-        get() = intent.getStringExtra(EXTRA_TOKEN) ?: ""
-
-    private val tracking: String
-        get() = intent.getStringExtra(EXTRA_TRACKING) ?: ""
-
-    private val phone: String
-        get() = intent.getStringExtra(EXTRA_PHONE) ?: ""
-
-    private val phoneHashed: String
-        get() = intent.getStringExtra(EXTRA_PHONE_HASHED) ?: ""
-
-    private val dimensions: String
-        get() = intent.getStringExtra(EXTRA_DIMENSIONS) ?: ""
-
-    private val environment: WebAppEnvironment
-        get() = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra(EXTRA_ENVIRONMENT, WebAppEnvironment::class.java)
-        } else {
-            intent.getSerializableExtra(EXTRA_ENVIRONMENT) as WebAppEnvironment
-        }) ?: WebAppEnvironment.Production
 
     private val permissionsRequester =
         PermissionsRequester(
             activity = this,
             permissions = listOf(android.Manifest.permission.CAMERA),
         )
+
+    private val initialUrl by lazy { getInitialUrl() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +42,7 @@ class WebViewActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     CourierWebView(
-                        url = url,
+                        url = initialUrl,
                         onSuccessCallback = ::onSuccess,
                         onFailCallback = ::onFail,
                         onErrorCallback = ::onError,
@@ -74,21 +56,32 @@ class WebViewActivity : ComponentActivity() {
         permissionsRequester.askPermissionsRationale()
     }
 
+    private fun getInitialUrl(): String =
+        if (intent.isDelivery()) {
+            val params = intent.deliveryParams()
+            GetDeliveryUrlUseCase().invoke(
+                environment = params.webAppEnvironment,
+                accessToken = params.accessToken,
+                tracking = params.tracking,
+                phone = if (!params.isPhoneHashed) params.recipientPhone else "",
+                phoneHashed = if (params.isPhoneHashed) params.recipientPhone else "",
+                dimensions = params.dimensions.orEmpty()
+            )
+        } else {
+            val params = intent.retrievalParams()
+            GetRetrievalUrlUseCase().invoke(
+                environment = params.webAppEnvironment,
+                accessToken = params.accessToken,
+                citiboxId = params.citiboxId
+            )
+        }
+
+
     private fun setDefaultResult() {
         setResult(RESULT_CANCELED, Intent().apply {
             putExtra(TransactionResult.FAILURE_CODE_KEY.code, TransactionCancel.NOT_STARTED.code)
         })
     }
-
-    private val url: String
-        get() = GetDeliveryUrlUseCase().invoke(
-            environment = environment,
-            accessToken = token,
-            tracking = tracking,
-            phone = phone,
-            phoneHashed = phoneHashed,
-            dimensions = dimensions
-        )
 
     private fun onSuccess(data: SuccessData) {
         val intent = Intent().apply {
@@ -168,5 +161,34 @@ class WebViewActivity : ComponentActivity() {
             for (b in data) hex.append(String.format("%02x", b.toInt() and 0xFF))
             return hex.toString()
         }
+
+        private fun Intent.isDelivery(): Boolean =
+            hasExtra(EXTRA_TRACKING) && (hasExtra(EXTRA_PHONE_HASHED) || hasExtra(EXTRA_PHONE))
+
+        private fun Intent.deliveryParams() = DeliveryParams(
+            accessToken = getStringExtra(EXTRA_TOKEN).orEmpty(),
+            tracking = getStringExtra(EXTRA_TRACKING).orEmpty(),
+            dimensions = getStringExtra(EXTRA_DIMENSIONS),
+            recipientPhone = getStringExtra(EXTRA_PHONE).orEmpty()
+                    + getStringExtra(EXTRA_PHONE_HASHED).orEmpty(),
+            isPhoneHashed = getStringExtra(EXTRA_PHONE).isNullOrEmpty(),
+            webAppEnvironment = webAppEnvironment()
+        )
+
+        private fun Intent.retrievalParams() = RetrievalParams(
+            accessToken = getStringExtra(EXTRA_TOKEN).orEmpty(),
+            citiboxId = getStringExtra(EXTRA_CITIBOX_ID).orEmpty(),
+            webAppEnvironment = webAppEnvironment()
+        )
+
+        private fun Intent.webAppEnvironment() =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                getSerializableExtra(
+                    EXTRA_ENVIRONMENT,
+                    WebAppEnvironment::class.java
+                ) ?: WebAppEnvironment.Production
+            } else {
+                getSerializableExtra(EXTRA_ENVIRONMENT) as WebAppEnvironment
+            }
     }
 }

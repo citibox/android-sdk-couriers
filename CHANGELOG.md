@@ -3,6 +3,8 @@
 ## [Unreleased]
 ### Added
 - URL split for url usage
+- Destroy web view when finish releasing memory and data
+- Added web view contract for retrieval
 
 ## [1.1.0] 2023-12-14
 ### Added

@@ -94,9 +94,9 @@ internal class CourierWebViewClient(
     private fun Uri?.extractSuccessData(): SuccessData? {
         val boxNumber = this?.getQueryParameter(QUERY_BOX_NUMBER)?.toIntOrNull()
         val citiboxId = this?.getQueryParameter(QUERY_CITIBOX_ID)?.toIntOrNull()
-        val deliveryId = this?.getQueryParameter(QUERY_DELIVERY_ID)
+        val deliveryId = this?.getQueryParameter(QUERY_DELIVERY_ID).orEmpty()
 
-        return if (boxNumber != null && citiboxId != null && deliveryId != null) {
+        return if (boxNumber != null && citiboxId != null) {
             SuccessData(boxNumber, citiboxId, deliveryId)
         } else {
             null

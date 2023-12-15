@@ -14,10 +14,15 @@ class RetrievalLauncher private constructor(
 ) {
 
     private lateinit var deepLinkLauncher: ActivityResultLauncher<RetrievalParams>
+    private lateinit var webViewLauncher: ActivityResultLauncher<RetrievalParams>
 
     constructor(fragment: Fragment, onResult: (RetrievalResult) -> Unit) :
             this(onResult) {
         deepLinkLauncher = fragment.registerForActivityResult(
+            /* contract = */ DeepLinkRetrievalContract(),
+            /* callback = */ onResult
+        )
+        webViewLauncher = fragment.registerForActivityResult(
             /* contract = */ DeepLinkRetrievalContract(),
             /* callback = */ onResult
         )
@@ -29,11 +34,24 @@ class RetrievalLauncher private constructor(
             /* contract = */ DeepLinkRetrievalContract(),
             /* callback = */ onResult
         )
+        webViewLauncher = activity.registerForActivityResult(
+            /* contract = */ DeepLinkRetrievalContract(),
+            /* callback = */ onResult
+        )
     }
 
     fun launch(params: RetrievalParams) {
         runCatching {
             deepLinkLauncher.launch(params)
+        }.getOrElse {
+            Log.w("RetrievalLauncher", "Error launching deep link", it)
+            launchWebView(params)
+        }
+    }
+
+    private fun launchWebView(params: RetrievalParams) {
+        runCatching {
+            webViewLauncher.launch(params)
         }.getOrElse {
             Log.w("RetrievalLauncher", "Error launching web view", it)
             fail()

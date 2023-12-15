@@ -8,6 +8,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.citibox.courier.sdk.webview.models.OnSuccessCallback
 import com.citibox.courier.sdk.webview.models.OnUnSuccessCallback
+import kotlinx.coroutines.delay
 
 @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
 @Composable
@@ -28,6 +30,10 @@ internal fun CourierWebView(
     onCancelCallback: OnUnSuccessCallback,
 ) {
     var isLoading by remember {
+        mutableStateOf(true)
+    }
+
+    var showLoading by remember {
         mutableStateOf(true)
     }
 
@@ -79,11 +85,26 @@ internal fun CourierWebView(
             },
             update = {
                 it.loadUrl(url)
+            },
+            onRelease = {
+                it.apply {
+                    clearCache(false)
+                    loadUrl("about:blank")
+                    onPause()
+                    removeAllViews()
+                    pauseTimers()
+                    destroy()
+                }
             }
         )
 
-        if (isLoading) {
+        if (showLoading) {
             Loading(modifier = Modifier.align(Alignment.Center))
+        }
+
+        LaunchedEffect(isLoading){
+            delay(500)
+            showLoading = isLoading
         }
     }
 }

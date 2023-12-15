@@ -1,19 +1,30 @@
 # Communication
 
-## Start web app
+## Delivery
 
 The app will open a web view loading the URL
 
-    [URL]?access_token=[ACCESS_TOKEN]&tracking=[TRACKING]&recipient_phone=[RECIPIENT_PHONE]&recipient_hash=[RECIPIENT_HASH]&dimensions=[DIMENSIONS]
+    [URL]/deeplink-delivery?access_token=[ACCESS_TOKEN]&tracking=[TRACKING]&recipient_phone=[RECIPIENT_PHONE]&recipient_hash=[RECIPIENT_HASH]&dimensions=[DIMENSIONS]
 
-Mandatory params:
-- `access_token`
-- `tracking`
-- `recipient_phone` or `recipient_hash`
+Parameters:
 
-Optional:
-- `dimensions`
+| Param                                 | Type                   |
+|---------------------------------------|------------------------|
+| `access_token`                        | `String`               |
+| `tracking`                            | `String`               |
+| `recipient_phone` or `recipient_hash` | `String`               |
+| `dimensions`                          | `String`<br />Optional |
 
+## Retrieval 
+
+The app will open a web view loading the URL
+
+    [URL]/deeplink-retrieval?access_token=[ACCESS_TOKEN]&citibox_id=[CITIBOX_ID]
+
+| Param          | Type     |
+|----------------|----------|
+| `access_token` | `String` |
+| `citibox_id`   | `String` |
 
 ## Getting results from web app
 
@@ -26,7 +37,8 @@ Two communication mechanisms have been implemented:
 
 There is an object exposed to Javascript called `CitiboxCourierSDK` with four methods:
 
-- `onSuccess(boxNumber: Int, citiboxId: Int, deliveryId: String)`
+- `onSuccess(boxNumber: Int, citiboxId: Int, deliveryId: String)` (for Delivery success)
+- `onSuccess(boxNumber: Int, citiboxId: Int)` (for Retrieval success)
 - `onFail(failureCode: String)`
 - `onError(errorCode: String)`
 - `onCancel(cancelCode: String)`

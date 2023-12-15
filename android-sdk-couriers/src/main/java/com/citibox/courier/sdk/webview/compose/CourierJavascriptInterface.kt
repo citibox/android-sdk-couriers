@@ -39,6 +39,20 @@ internal class CourierJavascriptInterface(
     }
 
     @JavascriptInterface
+    fun onSuccess(
+        boxNumber: Int,
+        citiboxId: Int,
+    ) {
+        onSuccessCallback(
+            SuccessData(
+                boxNumber = boxNumber,
+                citiboxId = citiboxId,
+                deliveryId = ""
+            )
+        )
+    }
+
+    @JavascriptInterface
     fun onFail(failureCode: String) {
         onFailCallback(failureCode)
     }
