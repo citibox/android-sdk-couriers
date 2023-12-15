@@ -30,7 +30,7 @@ class WebViewActivity : ComponentActivity() {
             permissions = listOf(android.Manifest.permission.CAMERA),
         )
 
-    private val initialUrl by lazy { getInitialUrl() }
+    private val initialUrl by lazy { generateInitialUrl() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,7 @@ class WebViewActivity : ComponentActivity() {
         permissionsRequester.askPermissionsRationale()
     }
 
-    private fun getInitialUrl(): String =
+    private fun generateInitialUrl(): String =
         if (intent.isDelivery()) {
             val params = intent.deliveryParams()
             GetDeliveryUrlUseCase().invoke(
@@ -146,6 +146,16 @@ class WebViewActivity : ComponentActivity() {
                     putExtra(EXTRA_PHONE, input.recipientPhone)
                 }
 
+                putExtra(EXTRA_ENVIRONMENT, input.webAppEnvironment)
+            }
+
+        fun buildIntent(
+            context: Context,
+            input: RetrievalParams,
+        ): Intent =
+            Intent(context, WebViewActivity::class.java).apply {
+                putExtra(EXTRA_TOKEN, input.accessToken)
+                putExtra(EXTRA_CITIBOX_ID, input.citiboxId)
                 putExtra(EXTRA_ENVIRONMENT, input.webAppEnvironment)
             }
 

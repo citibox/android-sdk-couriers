@@ -1,4 +1,4 @@
-package com.citibox.courier.sdk.example.compose
+package com.citibox.courier.sdk.example.delivery.compose
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

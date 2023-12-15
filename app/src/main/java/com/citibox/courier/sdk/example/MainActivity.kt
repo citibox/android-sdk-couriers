@@ -1,23 +1,28 @@
 package com.citibox.courier.sdk.example
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.citibox.courier.sdk.DeliveryLauncher
-import com.citibox.courier.sdk.example.compose.MainScreen
+import androidx.compose.ui.unit.dp
+import com.citibox.courier.sdk.example.delivery.DeliveryActivity
+import com.citibox.courier.sdk.example.retrieval.RetrievalActivity
 import com.citibox.courier.sdk.example.ui.theme.AndroidsdkcouriersTheme
-import com.citibox.courier.sdk.domain.DeliveryResult
 
 class MainActivity : ComponentActivity() {
-
-    private val viewModel: MainViewModel by viewModels()
-
-    private val citiboxLauncher = DeliveryLauncher(this, ::deliveryResult)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,16 +32,45 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(
-                        viewModel = viewModel,
-                        onLaunch = citiboxLauncher::launch,
-                    )
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(
+                            16.dp,
+                            Alignment.CenterVertically
+                        ),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.padding(32.dp)
+                    ) {
+                        Text(
+                            text = "Citibox SDK Couriers example",
+                            style = MaterialTheme.typography.headlineLarge
+                        )
+
+                        Spacer(modifier = Modifier.height(32.dp))
+
+                        Button(
+                            onClick = ::launchDelivery,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "📥 Delivery example")
+                        }
+
+                        Button(
+                            onClick = ::launchRetrieval,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "📤 Retrieval example")
+                        }
+                    }
                 }
             }
         }
     }
 
-    private fun deliveryResult(result: DeliveryResult) {
-        viewModel.deliveryResult(result = result)
+    private fun launchDelivery() {
+        startActivity(Intent(this, DeliveryActivity::class.java))
+    }
+
+    private fun launchRetrieval() {
+        startActivity(Intent(this, RetrievalActivity::class.java))
     }
 }

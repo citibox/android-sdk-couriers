@@ -1,21 +1,22 @@
-package com.citibox.courier.sdk.example.compose
+package com.citibox.courier.sdk.example.delivery.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import com.citibox.courier.sdk.example.MainViewModel
-import com.citibox.courier.sdk.example.models.MainSideEffect
+import com.citibox.courier.sdk.example.delivery.DeliveryViewModel
+import com.citibox.courier.sdk.example.delivery.models.DeliverySideEffect
 import com.citibox.courier.sdk.domain.DeliveryParams
 
 @Composable
-fun MainScreen(
-    viewModel: MainViewModel,
-    onLaunch: (params: DeliveryParams) -> Unit
+fun DeliveryScreen(
+    viewModel: DeliveryViewModel,
+    onLaunch: (params: DeliveryParams) -> Unit,
+    onBack: () -> Unit,
 ) {
 
     val state = viewModel.state.collectAsState()
 
-    MainLayout(
+    DeliveryLayout(
         state = state.value,
         onAccessChanged = viewModel::onTokenChanged,
         onTrackingChanged = viewModel::onTrackingChanged,
@@ -25,11 +26,12 @@ fun MainScreen(
         onEnvironmentChanged = viewModel::onEnvironmentChanged,
         onLaunchClicked = viewModel::onLaunch,
         onResultClearClicked = viewModel::onResultClear,
+        onBack = onBack
     )
 
     LaunchedEffect(viewModel) {
         viewModel.sideEffect.collect {
-            if (it is MainSideEffect.Launch) {
+            if (it is DeliverySideEffect.Launch) {
                 onLaunch(it.params)
             }
         }

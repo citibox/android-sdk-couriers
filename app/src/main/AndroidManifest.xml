@@ -13,12 +13,22 @@
         android:theme="@style/Theme.Androidsdkcouriers"
         tools:targetApi="31">
         <activity
+            android:name=".retrieval.RetrievalActivity"
+            android:exported="false"
+            android:label="@string/title_activity_retrieval"
+            android:theme="@style/Theme.Androidsdkcouriers" />
+        <activity
+            android:name=".delivery.DeliveryActivity"
+            android:exported="false"
+            android:label="@string/title_activity_delivery"
+            android:theme="@style/Theme.Androidsdkcouriers" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
             android:resizeableActivity="true"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.Androidsdkcouriers">
+            android:theme="@style/Theme.Androidsdkcouriers"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

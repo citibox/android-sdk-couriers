@@ -8,6 +8,7 @@ import com.citibox.courier.sdk.deeplink.DeepLinkRetrievalContract
 import com.citibox.courier.sdk.domain.RetrievalParams
 import com.citibox.courier.sdk.domain.RetrievalResult
 import com.citibox.courier.sdk.domain.TransactionError
+import com.citibox.courier.sdk.webview.WebViewRetrievalContract
 
 class RetrievalLauncher private constructor(
     private val onResult: (RetrievalResult) -> Unit
@@ -23,7 +24,7 @@ class RetrievalLauncher private constructor(
             /* callback = */ onResult
         )
         webViewLauncher = fragment.registerForActivityResult(
-            /* contract = */ DeepLinkRetrievalContract(),
+            /* contract = */ WebViewRetrievalContract(),
             /* callback = */ onResult
         )
     }
@@ -35,7 +36,7 @@ class RetrievalLauncher private constructor(
             /* callback = */ onResult
         )
         webViewLauncher = activity.registerForActivityResult(
-            /* contract = */ DeepLinkRetrievalContract(),
+            /* contract = */ WebViewRetrievalContract(),
             /* callback = */ onResult
         )
     }

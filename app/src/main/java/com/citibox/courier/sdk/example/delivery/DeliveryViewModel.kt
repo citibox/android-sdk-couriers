@@ -1,9 +1,9 @@
-package com.citibox.courier.sdk.example
+package com.citibox.courier.sdk.example.delivery
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.citibox.courier.sdk.example.models.MainSideEffect
-import com.citibox.courier.sdk.example.models.MainState
+import com.citibox.courier.sdk.example.delivery.models.DeliverySideEffect
+import com.citibox.courier.sdk.example.delivery.models.DeliveryState
 import com.citibox.courier.sdk.domain.DeliveryParams
 import com.citibox.courier.sdk.domain.DeliveryResult
 import com.citibox.courier.sdk.webview.models.WebAppEnvironment
@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class DeliveryViewModel : ViewModel() {
 
-    private val _state = MutableStateFlow(MainState())
+    private val _state = MutableStateFlow(DeliveryState())
     val state = _state.asStateFlow()
 
-    private val _sideEffect = Channel<MainSideEffect>(Channel.BUFFERED)
+    private val _sideEffect = Channel<DeliverySideEffect>(Channel.BUFFERED)
     val sideEffect = _sideEffect.receiveAsFlow()
 
     fun onTokenChanged(value: String) = _state.update { it.copy(token = value) }
@@ -49,7 +49,7 @@ class MainViewModel : ViewModel() {
                 webAppEnvironment = _state.value.environment
             )
 
-            _sideEffect.trySend(MainSideEffect.Launch(param))
+            _sideEffect.trySend(DeliverySideEffect.Launch(param))
         }
     }
 
