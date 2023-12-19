@@ -27,7 +27,10 @@ class WebViewActivity : ComponentActivity() {
     private val permissionsRequester =
         PermissionsRequester(
             activity = this,
-            permissions = listOf(android.Manifest.permission.CAMERA),
+            permissions = listOf(
+                android.Manifest.permission.CAMERA,
+                android.Manifest.permission.RECORD_AUDIO
+            ),
         )
 
     private val initialUrl by lazy { generateInitialUrl() }

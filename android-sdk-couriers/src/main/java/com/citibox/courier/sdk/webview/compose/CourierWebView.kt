@@ -41,7 +41,7 @@ internal fun CourierWebView(
         AndroidView(
             factory = { context ->
                 WebView(context).apply {
-                    setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+                    setLayerType(View.LAYER_TYPE_HARDWARE, null)
 
                     layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -61,7 +61,7 @@ internal fun CourierWebView(
                     webChromeClient = buildWebChromeClient()
 
                     settings.javaScriptEnabled = true
-                    settings.javaScriptCanOpenWindowsAutomatically = false
+                    settings.javaScriptCanOpenWindowsAutomatically = true
                     settings.allowContentAccess = true
                     settings.domStorageEnabled = true
                     settings.cacheMode = WebSettings.LOAD_DEFAULT
