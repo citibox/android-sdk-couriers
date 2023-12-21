@@ -23,7 +23,8 @@ fun MainScreen(
         onPhoneHashedChanged = viewModel::onPhoneHashedChanged,
         onDimensionsChanged = viewModel::onDimensionsChanged,
         onEnvironmentChanged = viewModel::onEnvironmentChanged,
-        onLaunchClicked = viewModel::onLaunch
+        onLaunchClicked = viewModel::onLaunch,
+        onResultClearClicked = viewModel::onResultClear,
     )
 
     LaunchedEffect(viewModel) {
