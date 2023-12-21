@@ -8,5 +8,6 @@ data class DeliveryParams(
     val recipientPhone: String,
     val isPhoneHashed: Boolean = true,
     val dimensions: String? = null,
+    val bookingId: String? = null,
     val webAppEnvironment: WebAppEnvironment
 )

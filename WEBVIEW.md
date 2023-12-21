@@ -4,7 +4,7 @@
 
 The app will open a web view loading the URL
 
-    [URL]/deeplink-delivery?access_token=[ACCESS_TOKEN]&tracking=[TRACKING]&recipient_phone=[RECIPIENT_PHONE]&recipient_hash=[RECIPIENT_HASH]&dimensions=[DIMENSIONS]
+    [URL]/deeplink-delivery?access_token=[ACCESS_TOKEN]&tracking=[TRACKING]&recipient_phone=[RECIPIENT_PHONE]&recipient_hash=[RECIPIENT_HASH]&dimensions=[DIMENSIONS]&booking_id=[BOOKING_ID]
 
 Parameters:
 
@@ -14,6 +14,7 @@ Parameters:
 | `tracking`                            | `String`               |
 | `recipient_phone` or `recipient_hash` | `String`               |
 | `dimensions`                          | `String`<br />Optional |
+| `booking_id`                          | `String`<br />Optional |
 
 ## Retrieval 
 

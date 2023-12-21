@@ -24,6 +24,7 @@ fun DeliveryScreen(
         onPhoneHashedChanged = viewModel::onPhoneHashedChanged,
         onDimensionsChanged = viewModel::onDimensionsChanged,
         onEnvironmentChanged = viewModel::onEnvironmentChanged,
+        onBookingChanged = viewModel::onBookingIdChanged,
         onLaunchClicked = viewModel::onLaunch,
         onResultClearClicked = viewModel::onResultClear,
         onBack = onBack

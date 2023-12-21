@@ -22,6 +22,7 @@ internal class DeepLinkDeliveryContract :
             .appendQueryParameter(QUERY_ACCESS_TOKEN, input.accessToken.trim())
             .appendQueryParameter(QUERY_TRACKING, input.tracking.trim())
             .appendQueryParameter(QUERY_DIMENSIONS, input.dimensions?.trim().orEmpty())
+            .appendQueryParameter(QUERY_BOOKING_ID, input.bookingId?.trim().orEmpty())
 
         if (input.isPhoneHashed) {
             uriBuilder.appendQueryParameter(QUERY_HASH, input.recipientPhone.calculateSHA256())
@@ -115,6 +116,7 @@ internal class DeepLinkDeliveryContract :
         private const val QUERY_PHONE = "recipient_phone"
         private const val QUERY_HASH = "recipient_hash"
         private const val QUERY_DIMENSIONS = "dimensions"
+        private const val QUERY_BOOKING_ID = "booking_id"
 
         private const val EXTRA_BOX_NUMBER = "box_number"
         private const val EXTRA_CITIBOX_ID = "citibox_id"

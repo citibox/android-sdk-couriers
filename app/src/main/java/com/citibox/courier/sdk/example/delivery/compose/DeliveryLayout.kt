@@ -38,6 +38,7 @@ fun DeliveryLayout(
     onPhoneChanged: (String) -> Unit,
     onPhoneHashedChanged: (Boolean) -> Unit,
     onDimensionsChanged: (String) -> Unit,
+    onBookingChanged: (String) -> Unit,
     onEnvironmentChanged: (WebAppEnvironment) -> Unit,
     onLaunchClicked: () -> Unit,
     onResultClearClicked: () -> Unit,
@@ -109,8 +110,13 @@ fun DeliveryLayout(
                 )
             }
             InputDataField(
+                textDefault = state.bookingId,
+                label = "🎟️ Booking Id - optional",
+                onValueChanged = onBookingChanged,
+            )
+            InputDataField(
                 textDefault = state.dimensions,
-                label = "📐 Dimensions ([mm]x[mm]x[mm])",
+                label = "📐 Dimensions ([mm]x[mm]x[mm]) - optional",
                 onValueChanged = onDimensionsChanged,
             )
             EnvironmentSelector(
