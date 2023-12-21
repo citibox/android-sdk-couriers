@@ -8,6 +8,7 @@ data class DeliveryState(
     val phone: String = "",
     val phoneHashed: Boolean = false,
     val dimensions: String = "",
+    val bookingId: String = "",
     val resultMessage: String = "",
     val environment: WebAppEnvironment = WebAppEnvironment.Sandbox
 )

@@ -28,6 +28,8 @@ class DeliveryViewModel : ViewModel() {
 
     fun onPhoneChanged(value: String) = _state.update { it.copy(phone = value) }
 
+    fun onBookingIdChanged(value: String) = _state.update { it.copy(bookingId = value) }
+
     fun onPhoneHashedChanged(value: Boolean) = _state.update { it.copy(phoneHashed = value) }
 
     fun onDimensionsChanged(value: String) = _state.update { it.copy(dimensions = value) }
@@ -40,18 +42,21 @@ class DeliveryViewModel : ViewModel() {
 
             _state.update { it.copy(resultMessage = "") }
 
-            val param = DeliveryParams(
-                accessToken = _state.value.token,
-                tracking = _state.value.tracking,
-                recipientPhone = _state.value.phone,
-                isPhoneHashed = _state.value.phoneHashed,
-                dimensions = _state.value.dimensions,
-                webAppEnvironment = _state.value.environment
-            )
+            val param = _state.value.toDeliveryParams()
 
             _sideEffect.trySend(DeliverySideEffect.Launch(param))
         }
     }
+
+    private fun DeliveryState.toDeliveryParams() = DeliveryParams(
+        accessToken = token,
+        tracking = tracking,
+        recipientPhone = phone,
+        isPhoneHashed = phoneHashed,
+        dimensions = dimensions,
+        bookingId = bookingId,
+        webAppEnvironment = environment
+    )
 
     fun onResultClear() {
         _state.update {
