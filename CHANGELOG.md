@@ -1,8 +1,12 @@
 # Changelog
 
-## [Unreleased]
+## [1.2.0] 2023-12-21
 ### Added
+- booking id for delivery
+- Example for retrieval
 - URL split for url usage
+- Destroy web view when finish releasing memory and data
+- Added web view contract for retrieval
 
 ## [1.1.0] 2023-12-14
 ### Added

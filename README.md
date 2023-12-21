@@ -4,11 +4,11 @@
 This library allows third parties to use Citibox Services for Couriers.  
 Works with Courier app installed or via web view
 
-## Content
+## Content 📋
 
 Library and example of how to integrate with Cibitox services for deliveries
 
-## Requirements
+## Requirements 👀
 
 Contact our partners at Citibox to get your ACCESS TOKEN
 
@@ -16,11 +16,11 @@ It's recommended to have Couriers App installed to get all the features and mayb
 
 If no Couriers App is installed, this SDK will show you the web app version with all the features needed in order to deliver your parcels
 
-## Documentation
+## Documentation 📚
 
-### How to use
+### Install 🏗️
 
-USe JitPack in your main `build.gradle.kts`
+Use JitPack in your main `build.gradle.kts`
 
 ```kotlin
 dependencyResolutionManagement {
@@ -40,10 +40,12 @@ dependencies {
 }
 ```
 
-### Delivery parcel
+### How to use it  🔨
+
+#### Delivery parcel
 
 [How to start the delivery process](DELIVERY.md)
 
-### Parcel retrieval
+#### Parcel retrieval
 
 [How to start the retrieval process](RETRIEVAL.md)
