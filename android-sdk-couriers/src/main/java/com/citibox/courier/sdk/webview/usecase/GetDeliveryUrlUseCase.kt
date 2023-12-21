@@ -12,7 +12,8 @@ class GetDeliveryUrlUseCase {
         tracking: String,
         phone: String,
         phoneHashed: String,
-        dimensions: String
+        dimensions: String,
+        bookingId: String
     ): String {
         val (base, segment) = when (environment) {
             WebAppEnvironment.Production -> BuildConfig.WEBAPP_PRO_URL to
@@ -36,6 +37,7 @@ class GetDeliveryUrlUseCase {
             .appendQueryParameter(PARAM_PHONE, phone)
             .appendQueryParameter(PARAM_PHONE_HASHED, phoneHashed)
             .appendQueryParameter(PARAM_DIMENSIONS, dimensions)
+            .appendQueryParameter(PARAM_BOOKING_ID, bookingId)
             .build()
             .toString()
     }
@@ -46,5 +48,6 @@ class GetDeliveryUrlUseCase {
         private const val PARAM_PHONE = "recipient_phone"
         private const val PARAM_PHONE_HASHED = "recipient_hash"
         private const val PARAM_DIMENSIONS = "dimensions"
+        private const val PARAM_BOOKING_ID = "booking_id"
     }
 }

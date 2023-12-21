@@ -68,7 +68,8 @@ class WebViewActivity : ComponentActivity() {
                 tracking = params.tracking,
                 phone = if (!params.isPhoneHashed) params.recipientPhone else "",
                 phoneHashed = if (params.isPhoneHashed) params.recipientPhone else "",
-                dimensions = params.dimensions.orEmpty()
+                dimensions = params.dimensions.orEmpty(),
+                bookingId = params.bookingId.orEmpty()
             )
         } else {
             val params = intent.retrievalParams()
@@ -129,6 +130,7 @@ class WebViewActivity : ComponentActivity() {
         const val EXTRA_PHONE_HASHED = "WebViewActivity:phone_hashed"
         const val EXTRA_DIMENSIONS = "WebViewActivity:dimensions"
         const val EXTRA_ENVIRONMENT = "WebViewActivity:environment"
+        const val EXTRA_BOOKING_ID = "WebViewActivity:booking_id"
 
         const val EXTRA_BOX_NUMBER = "box_number"
         const val EXTRA_CITIBOX_ID = "citibox_id"
@@ -142,6 +144,7 @@ class WebViewActivity : ComponentActivity() {
                 putExtra(EXTRA_TOKEN, input.accessToken)
                 putExtra(EXTRA_TRACKING, input.tracking)
                 putExtra(EXTRA_DIMENSIONS, input.dimensions?.trim().orEmpty())
+                putExtra(EXTRA_BOOKING_ID, input.bookingId?.trim().orEmpty())
 
                 if (input.isPhoneHashed) {
                     putExtra(EXTRA_PHONE_HASHED, input.recipientPhone.calculateSHA256())
@@ -185,6 +188,7 @@ class WebViewActivity : ComponentActivity() {
             recipientPhone = getStringExtra(EXTRA_PHONE).orEmpty()
                     + getStringExtra(EXTRA_PHONE_HASHED).orEmpty(),
             isPhoneHashed = getStringExtra(EXTRA_PHONE).isNullOrEmpty(),
+            bookingId = getStringExtra(EXTRA_BOOKING_ID).orEmpty(),
             webAppEnvironment = webAppEnvironment()
         )
 
