@@ -21,7 +21,7 @@ android {
         buildConfigField("String", "WEBAPP_TEST_URL", "\"http://192.168.1.157:8080/\"")
 
         buildConfigField("String", "WEBAPP_SEGMENT_DELIVERY", "\"deeplink-delivery\"")
-        buildConfigField("String", "WEBAPP_SEGMENT_RETRIEVAL", "\"deeplink-retrieval\"")
+        buildConfigField("String", "WEBAPP_SEGMENT_RETRIEVAL", "\"retrieval\"")
         buildConfigField("String", "WEBAPP_SEGMENT_TEST", "\"test-view\"")
 
     }
