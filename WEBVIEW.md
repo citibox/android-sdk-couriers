@@ -25,7 +25,7 @@ The app will open a web view loading the URL
 | Param          | Type     |
 |----------------|----------|
 | `access_token` | `String` |
-| `citibox_id`   | `String` |
+| `citibox_id`   | `Int`    |
 
 ## Getting results from web app
 
