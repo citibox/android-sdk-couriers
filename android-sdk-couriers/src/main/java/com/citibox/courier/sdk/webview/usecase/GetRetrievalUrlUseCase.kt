@@ -13,16 +13,16 @@ class GetRetrievalUrlUseCase {
     ): String {
         val (base, segment) = when (environment) {
             WebAppEnvironment.Production -> BuildConfig.WEBAPP_PRO_URL to
-                    BuildConfig.WEBAPP_SEGMENT_DELIVERY
+                    BuildConfig.WEBAPP_SEGMENT_RETRIEVAL
 
             WebAppEnvironment.Sandbox -> BuildConfig.WEBAPP_SANDBOX_URL to
-                    BuildConfig.WEBAPP_SEGMENT_DELIVERY
+                    BuildConfig.WEBAPP_SEGMENT_RETRIEVAL
 
             WebAppEnvironment.Test -> BuildConfig.WEBAPP_TEST_URL to
                     BuildConfig.WEBAPP_SEGMENT_TEST
 
             WebAppEnvironment.Local -> BuildConfig.WEBAPP_LOCAL_URL to
-                    BuildConfig.WEBAPP_SEGMENT_DELIVERY
+                    BuildConfig.WEBAPP_SEGMENT_RETRIEVAL
         }
 
         return base.toUri()
