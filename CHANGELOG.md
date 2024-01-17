@@ -1,4 +1,10 @@
 # Changelog
+### [1.3.0] 2023-17-01
+### Changed
+- Final URLs
+- Added skinny tests
+### Added
+- Definition of environments in docs
 
 ## [1.2.0] 2023-12-21
 ### Added
