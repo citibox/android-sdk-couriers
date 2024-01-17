@@ -20,12 +20,12 @@ Parameters:
 
 The app will open a web view loading the URL
 
-    [URL]/deeplink-retrieval?access_token=[ACCESS_TOKEN]&citibox_id=[CITIBOX_ID]
+    [URL]/retrieval?access_token=[ACCESS_TOKEN]&citibox_id=[CITIBOX_ID]
 
 | Param          | Type     |
 |----------------|----------|
 | `access_token` | `String` |
-| `citibox_id`   | `String` |
+| `citibox_id`   | `Int`    |
 
 ## Getting results from web app
 

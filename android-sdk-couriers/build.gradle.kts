@@ -15,14 +15,16 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "WEBAPP_PRO_URL", "\"https://app-courier.citibox.com/\"")
-        buildConfigField("String", "WEBAPP_SANDBOX_URL", "\"https://app-courier.citibox-sandbox.com/\"")
-        buildConfigField("String", "WEBAPP_LOCAL_URL", "\"http://192.168.1.157:8080/\"")
-        buildConfigField("String", "WEBAPP_TEST_URL", "\"http://192.168.1.157:8080/\"")
+        buildConfigField("String", "WEBAPP_PRO_URL", "\"http://shipping.citibox.com/\"")
+        buildConfigField("String", "WEBAPP_SANDBOX_URL", "\"https://shipping.citibox-sandbox.com/\"")
+        buildConfigField("String", "WEBAPP_LOCAL_URL", "\"http://localhost:8080/\"")
+        buildConfigField("String", "WEBAPP_TEST_URL", "\"https://shipping.citibox.tech/\"")
 
-        buildConfigField("String", "WEBAPP_SEGMENT_DELIVERY", "\"deeplink-delivery\"")
-        buildConfigField("String", "WEBAPP_SEGMENT_RETRIEVAL", "\"deeplink-retrieval\"")
-        buildConfigField("String", "WEBAPP_SEGMENT_TEST", "\"test-view\"")
+        buildConfigField("String", "WEBAPP_SEGMENT_DELIVERY", "\"delivery/location\"")
+        buildConfigField("String", "WEBAPP_SEGMENT_DELIVERY_TEST", "\"delivery/test\"")
+
+        buildConfigField("String", "WEBAPP_SEGMENT_RETRIEVAL", "\"retrieval/location\"")
+        buildConfigField("String", "WEBAPP_SEGMENT_RETRIEVAL_TEST", "\"retrieval/test\"")
 
     }
 

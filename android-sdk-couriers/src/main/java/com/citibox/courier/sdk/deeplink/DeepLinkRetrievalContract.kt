@@ -33,9 +33,10 @@ internal class DeepLinkRetrievalContract :
                 val boxNumber = requireNotNull(validIntent.extras?.getInt(EXTRA_BOX_NUMBER)) {
                     "Missing box number"
                 }
-                val citiboxId = requireNotNull(validIntent.extras?.getInt(EXTRA_CITIBOX_ID)) {
-                    "Missing Citibox ID"
-                }
+                val citiboxId =
+                    requireNotNull(validIntent.extras?.getString(EXTRA_CITIBOX_ID)?.toInt()) {
+                        "Missing Citibox ID"
+                    }
                 RetrievalResult.Success(
                     boxNumber = boxNumber,
                     citiboxId = citiboxId,
