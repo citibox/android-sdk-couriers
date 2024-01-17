@@ -3,6 +3,7 @@ package com.citibox.courier.sdk.webview.usecase
 import androidx.core.net.toUri
 import com.citibox.courier.sdk.BuildConfig
 import com.citibox.courier.sdk.webview.models.WebAppEnvironment
+import com.citibox.courier.sdk.webview.utils.appendPaths
 
 class GetDeliveryUrlUseCase {
 
@@ -23,15 +24,17 @@ class GetDeliveryUrlUseCase {
                     BuildConfig.WEBAPP_SEGMENT_DELIVERY
 
             WebAppEnvironment.Test -> BuildConfig.WEBAPP_TEST_URL to
-                    BuildConfig.WEBAPP_SEGMENT_TEST
+                    BuildConfig.WEBAPP_SEGMENT_DELIVERY_TEST
 
             WebAppEnvironment.Local -> BuildConfig.WEBAPP_LOCAL_URL to
                     BuildConfig.WEBAPP_SEGMENT_DELIVERY
         }
 
+        val segments = segment.split("/")
+
         return base.toUri()
             .buildUpon()
-            .appendPath(segment)
+            .appendPaths(segments)
             .appendQueryParameter(PARAM_ACCESS_TOKEN, accessToken)
             .appendQueryParameter(PARAM_TRACKING, tracking)
             .appendQueryParameter(PARAM_PHONE, phone)
