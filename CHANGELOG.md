@@ -1,5 +1,5 @@
 # Changelog
-### [1.3.0] 2023-17-01
+## [1.3.0] 2023-17-01
 ### Changed
 - Final URLs
 - Added skinny tests

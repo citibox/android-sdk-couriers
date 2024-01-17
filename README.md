@@ -37,7 +37,7 @@ Add the dependency in your `build.gradle.kts`
 
 ```kotlin
 dependencies {
-    implementation("com.github.citibox:android-sdk-couriers:1.0.0")
+    implementation("com.github.citibox:android-sdk-couriers:1.3.0")
 }
 ```
 
