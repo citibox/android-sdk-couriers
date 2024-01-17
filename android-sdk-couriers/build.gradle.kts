@@ -15,14 +15,16 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "WEBAPP_PRO_URL", "\"https://app-courier.citibox.com/\"")
-        buildConfigField("String", "WEBAPP_SANDBOX_URL", "\"https://app-courier.citibox-sandbox.com/\"")
-        buildConfigField("String", "WEBAPP_LOCAL_URL", "\"http://192.168.1.157:8080/\"")
-        buildConfigField("String", "WEBAPP_TEST_URL", "\"http://192.168.1.157:8080/\"")
+        buildConfigField("String", "WEBAPP_PRO_URL", "\"http://shipping.citibox.com/\"")
+        buildConfigField("String", "WEBAPP_SANDBOX_URL", "\"https://shipping.citibox-sandbox.com/\"")
+        buildConfigField("String", "WEBAPP_LOCAL_URL", "\"http://localhost:8080/\"")
+        buildConfigField("String", "WEBAPP_TEST_URL", "\"https://shipping.citibox.tech/\"")
 
-        buildConfigField("String", "WEBAPP_SEGMENT_DELIVERY", "\"deeplink-delivery\"")
-        buildConfigField("String", "WEBAPP_SEGMENT_RETRIEVAL", "\"deeplink-retrieval\"")
-        buildConfigField("String", "WEBAPP_SEGMENT_TEST", "\"test-view\"")
+        buildConfigField("String", "WEBAPP_SEGMENT_DELIVERY", "\"delivery/location\"")
+        buildConfigField("String", "WEBAPP_SEGMENT_DELIVERY_TEST", "\"delivery/test\"")
+
+        buildConfigField("String", "WEBAPP_SEGMENT_RETRIEVAL", "\"retrieval/location\"")
+        buildConfigField("String", "WEBAPP_SEGMENT_RETRIEVAL_TEST", "\"retrieval/test\"")
 
     }
 
@@ -68,11 +70,14 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
