@@ -21,6 +21,8 @@ needed in order to deliver your parcels
 
 ### Install 🏗️
 
+[![](https://jitpack.io/v/citibox/android-sdk-couriers.svg)](https://jitpack.io/#citibox/android-sdk-couriers)
+
 Use JitPack in your main `build.gradle.kts`
 
 ```kotlin
