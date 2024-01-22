@@ -1,6 +1,11 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("maven-publish")
+}
+
+apply {
+    from("${rootDir}/scripts/artifactory.gradle")
 }
 
 android {
@@ -16,7 +21,11 @@ android {
         }
 
         buildConfigField("String", "WEBAPP_PRO_URL", "\"http://shipping.citibox.com/\"")
-        buildConfigField("String", "WEBAPP_SANDBOX_URL", "\"https://shipping.citibox-sandbox.com/\"")
+        buildConfigField(
+            "String",
+            "WEBAPP_SANDBOX_URL",
+            "\"https://shipping.citibox-sandbox.com/\""
+        )
         buildConfigField("String", "WEBAPP_LOCAL_URL", "\"http://localhost:8080/\"")
         buildConfigField("String", "WEBAPP_TEST_URL", "\"https://shipping.citibox.tech/\"")
 
