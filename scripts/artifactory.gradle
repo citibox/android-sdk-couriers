@@ -3,7 +3,7 @@ publishing {
         release(MavenPublication) {
             groupId = 'com.github.citibox'
             artifactId = 'android-sdk-couriers'
-            version = '1.3.0'
+            version = '1.4.0'
 
             afterEvaluate {
                 from components.release

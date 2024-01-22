@@ -28,7 +28,7 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 ```
@@ -37,7 +37,7 @@ Add the dependency in your `build.gradle.kts`
 
 ```kotlin
 dependencies {
-    implementation("com.github.citibox:android-sdk-couriers:1.3.0")
+    implementation("com.github.citibox:android-sdk-couriers:1.4.0")
 }
 ```
 
