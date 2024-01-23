@@ -1,6 +1,6 @@
 package com.citibox.courier.sdk.webview.usecase
 
-import androidx.core.net.toUri
+import android.net.Uri
 import com.citibox.courier.sdk.BuildConfig
 import com.citibox.courier.sdk.webview.models.WebAppEnvironment
 import com.citibox.courier.sdk.webview.utils.appendPaths
@@ -32,7 +32,7 @@ class GetDeliveryUrlUseCase {
 
         val segments = segment.split("/")
 
-        return base.toUri()
+        return Uri.parse(base)
             .buildUpon()
             .appendPaths(segments)
             .appendQueryParameter(PARAM_ACCESS_TOKEN, accessToken)
