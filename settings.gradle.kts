@@ -16,5 +16,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "android-sdk-couriers"
-include(":app")
 include(":android-sdk-couriers")
