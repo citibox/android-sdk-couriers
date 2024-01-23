@@ -1,4 +1,4 @@
-package com.citibox.courier.sdk.webview.compose
+package com.citibox.courier.sdk.webview.components
 
 import android.webkit.JavascriptInterface
 import com.citibox.courier.sdk.webview.models.OnSuccessCallback

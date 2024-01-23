@@ -1,4 +1,12 @@
 # Changelog
+## [1.4.1] 2023-23-01
+### Changed
+- Removed Compose dependencies
+
+## [1.4.0] 2023-21-01
+### Changed
+- Jitpack publishing
+
 ## [1.3.0] 2023-17-01
 ### Changed
 - Final URLs
