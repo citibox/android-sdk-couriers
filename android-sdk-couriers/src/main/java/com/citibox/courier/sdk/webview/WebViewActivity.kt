@@ -5,24 +5,22 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
+import com.citibox.courier.sdk.R
 import com.citibox.courier.sdk.domain.DeliveryParams
 import com.citibox.courier.sdk.domain.RetrievalParams
 import com.citibox.courier.sdk.domain.TransactionCancel
 import com.citibox.courier.sdk.domain.TransactionResult
-import com.citibox.courier.sdk.theme.AndroidsdkcouriersTheme
-import com.citibox.courier.sdk.webview.compose.CourierWebView
+import com.citibox.courier.sdk.webview.components.CourierWebView
 import com.citibox.courier.sdk.webview.models.SuccessData
 import com.citibox.courier.sdk.webview.models.WebAppEnvironment
 import com.citibox.courier.sdk.webview.usecase.GetDeliveryUrlUseCase
 import com.citibox.courier.sdk.webview.usecase.GetRetrievalUrlUseCase
 import java.security.MessageDigest
 
-class WebViewActivity : ComponentActivity() {
+@Suppress("DEPRECATION")
+class WebViewActivity : ComponentActivity(
+    R.layout.activity_webview
+) {
 
     private val permissionsRequester =
         PermissionsRequester(
@@ -33,26 +31,12 @@ class WebViewActivity : ComponentActivity() {
             ),
         )
 
-    private val initialUrl by lazy { generateInitialUrl() }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            AndroidsdkcouriersTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    CourierWebView(
-                        url = initialUrl,
-                        onSuccessCallback = ::onSuccess,
-                        onFailCallback = ::onFail,
-                        onErrorCallback = ::onError,
-                        onCancelCallback = ::onCancel,
-                    )
-                }
-            }
+
+        findViewById<CourierWebView>(R.id.courierWebView).apply {
+            callbacks(::onSuccess, ::onFail, ::onError, ::onCancel)
+            url = generateInitialUrl()
         }
 
         setDefaultResult()
@@ -120,6 +104,11 @@ class WebViewActivity : ComponentActivity() {
         }
         setResult(RESULT_CANCELED, intent)
         finish()
+    }
+
+    override fun onDestroy() {
+        findViewById<CourierWebView>(R.id.courierWebView)?.release()
+        super.onDestroy()
     }
 
     companion object {

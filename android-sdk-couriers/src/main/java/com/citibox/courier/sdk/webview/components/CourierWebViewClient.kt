@@ -1,4 +1,4 @@
-package com.citibox.courier.sdk.webview.compose
+package com.citibox.courier.sdk.webview.components
 
 import android.net.Uri
 import android.webkit.WebResourceError
